@@ -2,7 +2,7 @@
  * 회사별 상세 — 전 법인 카드 뷰 (원본 tab-detail 포팅)
  */
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCompany, slugify } from '../contexts/CompanyContext'
 import { fmt, fmtGrowth, growthClass, fmtInd } from '../utils/groupFormatters'
 
@@ -61,7 +61,7 @@ function IndicatorBlock({ indicators, title, accent }) {
   )
 }
 
-function CompanyCard({ c }) {
+function CompanyCard({ c, onDoubleClick }) {
   const opm = c.revenue?.y25 && c.operatingProfit?.y25
     ? c.operatingProfit.y25 / c.revenue.y25 : null
   const isAff = c.group === '관계사그룹'
@@ -71,7 +71,7 @@ function CompanyCard({ c }) {
       <div className={`px-4 py-3 text-white flex justify-between items-center ${
         isAff ? 'bg-gradient-to-r from-gray-700 to-gray-600' : 'bg-gradient-to-r from-primary-dark to-primary'
       }`}>
-        <Link to={`/company/${slugify(c.name)}`} className="font-semibold hover:underline">{c.name}</Link>
+        <Link to={`/company/${slugify(c.name)}`} onDoubleClick={(e) => { e.preventDefault(); onDoubleClick(c.name) }} className="font-semibold hover:underline cursor-pointer" title="더블클릭: 발표 페이지">{c.name}</Link>
         <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full">{isAff ? '관계사' : '계열사'}</span>
       </div>
       <div className="p-4">
@@ -114,8 +114,13 @@ function CompanyCard({ c }) {
 
 export default function CompanyCards() {
   const { companies, subsidiaries, affiliates } = useCompany()
+  const navigate = useNavigate()
   const [filter, setFilter] = useState('all')
   const [allOpen, setAllOpen] = useState(false)
+
+  const goToPresentation = (name) => {
+    navigate('/presentation', { state: { selectedCompany: name } })
+  }
 
   const list = filter === 'all' ? companies
     : filter === '계열사그룹' ? subsidiaries : affiliates
@@ -139,7 +144,7 @@ export default function CompanyCards() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {list.map(c => <CompanyCard key={c.name} c={c} />)}
+        {list.map(c => <CompanyCard key={c.name} c={c} onDoubleClick={goToPresentation} />)}
       </div>
     </div>
   )

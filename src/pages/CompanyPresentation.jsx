@@ -1,7 +1,8 @@
 /**
  * 회사별 발표 페이지 — 좌측 법인 선택, 우측 발표용 뷰 (원본 tab-present 포팅)
  */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useCompany } from '../contexts/CompanyContext'
 import { fmt, fmtGrowth, growthClass, fmtInd } from '../utils/groupFormatters'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LineChart, Line, CartesianGrid } from 'recharts'
@@ -236,8 +237,18 @@ function generateCommentary(c) {
 }
 
 export default function CompanyPresentation() {
-  const { subsidiaries, affiliates } = useCompany()
+  const { subsidiaries, affiliates, companies } = useCompany()
+  const location = useLocation()
   const [selected, setSelected] = useState(null)
+
+  // 회사별 상세에서 더블클릭으로 넘어온 경우 자동 선택
+  useEffect(() => {
+    const name = location.state?.selectedCompany
+    if (name && companies.length) {
+      const found = companies.find(c => c.name === name)
+      if (found) setSelected(found)
+    }
+  }, [location.state, companies])
 
   return (
     <div>
