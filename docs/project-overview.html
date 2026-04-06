@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>손익 드릴다운 레포트 - 프로젝트 현황</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --primary: #F5A623;
+      --primary-dark: #E09000;
+      --primary-light: #FFF3E0;
+      --increase: #1565C0;
+      --decrease: #D32F2F;
+      --surface: #F9FAFB;
+      --border: #E5E7EB;
+      --gray-900: #111827;
+      --gray-700: #374151;
+      --gray-500: #6B7280;
+      --gray-400: #9CA3AF;
+      --gray-300: #D1D5DB;
+      --gray-100: #F3F4F6;
+      --gray-50: #F9FAFB;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--gray-900);
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* ══════ Hero Section ══════ */
+    .hero {
+      background: linear-gradient(135deg, var(--gray-900) 0%, #2d2d2d 100%);
+      color: white;
+      padding: 80px 40px 60px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ══════ Container ══════ */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ══════ Section ══════ */
+    section {
+      padding: 60px 0;
+    }
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--gray-500);
+      margin-bottom: 36px;
+    }
+
+    /* ══════ Stats Bar ══════ */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: -40px 24px 0;
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 24px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+    .stat-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 4px;
+    }
+
+    /* ══════ Overview Info ══════ */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .overview-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .overview-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .overview-card h3 .icon {
+      width: 28px;
+      height: 28px;
+      background: var(--primary-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .overview-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .overview-card li {
+      padding: 6px 0;
+      font-size: 14px;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--border);
+    }
+    .overview-card li:last-child { border-bottom: none; }
+    .overview-card li strong {
+      color: var(--gray-900);
+    }
+
+    /* ══════ Architecture Diagram ══════ */
+    .arch-diagram {
+      background: var(--gray-900);
+      border-radius: 16px;
+      padding: 40px;
+      color: white;
+      margin-top: 24px;
+    }
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .arch-box {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 16px 24px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .arch-box.highlight {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    .arch-box .label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .arch-box .name {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .arch-arrow {
+      font-size: 24px;
+      color: var(--primary);
+    }
+
+    /* ══════ Page Showcase ══════ */
+    .page-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .page-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .page-card:nth-child(even) { direction: rtl; }
+    .page-card:nth-child(even) > * { direction: ltr; }
+
+    .page-info {
+      padding: 12px 0;
+    }
+    .page-info .page-number {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .page-info h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .page-info .page-route {
+      display: inline-block;
+      background: var(--gray-100);
+      color: var(--gray-500);
+      font-size: 12px;
+      font-family: monospace;
+      padding: 2px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .page-info p {
+      font-size: 14px;
+      color: var(--gray-700);
+      margin-bottom: 16px;
+    }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 6px 0;
+      font-size: 13px;
+      color: var(--gray-700);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .feature-list li::before {
+      content: '✓';
+      color: var(--primary);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .page-preview {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .preview-titlebar {
+      background: var(--gray-900);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .preview-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .preview-dot.red { background: #FF5F56; }
+    .preview-dot.yellow { background: #FFBD2E; }
+    .preview-dot.green { background: #27C93F; }
+    .preview-url {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      font-family: monospace;
+    }
+    .preview-body {
+      padding: 16px;
+    }
+
+    /* Mini Table Preview */
+    .mini-table {
+      width: 100%;
+      font-size: 11px;
+      border-collapse: collapse;
+    }
+    .mini-table thead th {
+      background: var(--primary);
+      color: white;
+      padding: 6px 8px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 10px;
+    }
+    .mini-table thead th:first-child {
+      text-align: left;
+    }
+    .mini-table tbody td {
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+    }
+    .mini-table tbody td:first-child {
+      text-align: left;
+      font-weight: 500;
+    }
+    .mini-table .highlight-row {
+      background: var(--primary-light);
+      font-weight: 700;
+    }
+    .mini-table .text-increase { color: var(--increase); }
+    .mini-table .text-decrease { color: var(--decrease); }
+    .mini-table .expandable {
+      cursor: pointer;
+      color: var(--gray-500);
+    }
+    .mini-table .sub-row td:first-child {
+      padding-left: 24px;
+      color: var(--gray-500);
+      font-weight: 400;
+    }
+
+    /* Mini Chart Placeholder */
+    .mini-chart {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .mini-chart-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 8px;
+    }
+    .bar-group {
+      display: flex;
+      align-items: end;
+      gap: 3px;
+      height: 60px;
+      padding: 0 4px;
+    }
+    .bar {
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+      min-width: 8px;
+      position: relative;
+    }
+    .bar-label {
+      font-size: 8px;
+      color: var(--gray-400);
+      text-align: center;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    /* KPI Cards Preview */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .kpi-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .kpi-label {
+      font-size: 9px;
+      color: var(--gray-500);
+    }
+    .kpi-value {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 2px 0;
+    }
+    .kpi-delta {
+      font-size: 9px;
+    }
+
+    /* Division Tabs Preview */
+    .div-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .div-tab {
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .div-tab.active {
+      color: white;
+    }
+    .div-tab.inactive {
+      background: var(--gray-100);
+      color: var(--gray-500);
+    }
+
+    /* Trend Line Preview */
+    .trend-line {
+      position: relative;
+      height: 60px;
+      margin: 8px 0;
+    }
+    .trend-svg { width: 100%; height: 100%; }
+
+    /* Breadcrumb Preview */
+    .mini-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      margin-bottom: 8px;
+      color: var(--gray-400);
+    }
+    .mini-breadcrumb .current {
+      color: var(--gray-900);
+      font-weight: 600;
+    }
+
+    /* ══════ Drilldown Flow ══════ */
+    .drilldown-section {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 24px;
+    }
+    .drill-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .drill-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .drill-label {
+      width: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .drill-steps {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .drill-step {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      position: relative;
+    }
+    .drill-step.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .drill-step-arrow {
+      color: var(--gray-300);
+      font-size: 16px;
+    }
+
+    /* ══════ Tech Stack ══════ */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .tech-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .tech-card .tech-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .tech-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .tech-card p {
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+
+    /* ══════ Data Pipeline ══════ */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+    .pipeline-stage {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 28px;
+      text-align: center;
+      min-width: 160px;
+    }
+    .pipeline-stage.source { border-color: #4CAF50; }
+    .pipeline-stage.process { border-color: var(--primary); }
+    .pipeline-stage.output { border-color: var(--increase); }
+    .pipeline-stage .stage-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .pipeline-stage.source .stage-label { color: #4CAF50; }
+    .pipeline-stage.process .stage-label { color: var(--primary); }
+    .pipeline-stage.output .stage-label { color: var(--increase); }
+    .pipeline-stage .stage-items {
+      font-size: 12px;
+      color: var(--gray-700);
+      line-height: 1.8;
+    }
+    .pipeline-arrow {
+      font-size: 28px;
+      color: var(--gray-300);
+      padding: 0 8px;
+    }
+
+    /* ══════ File Structure ══════ */
+    .file-tree {
+      background: var(--gray-900);
+      border-radius: 12px;
+      padding: 24px 32px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+    .file-tree .folder { color: var(--primary); }
+    .file-tree .file { color: #8BE9FD; }
+    .file-tree .comment { color: rgba(255,255,255,0.35); }
+    .file-tree .component { color: #50FA7B; }
+
+    /* ══════ Status Table ══════ */
+    .status-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .status-table thead th {
+      background: var(--gray-900);
+      color: white;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .status-table tbody td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .status-table tbody tr:hover {
+      background: var(--gray-50);
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .status-done {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+    .status-partial {
+      background: #FFF3E0;
+      color: #E65100;
+    }
+    .status-planned {
+      background: var(--gray-100);
+      color: var(--gray-500);
+    }
+
+    /* ══════ Feedback Section ══════ */
+    .feedback-section {
+      background: linear-gradient(135deg, var(--primary-light) 0%, #fff 100%);
+      border: 2px solid var(--primary);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+    }
+    .feedback-section h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feedback-section p {
+      color: var(--gray-500);
+      margin-bottom: 24px;
+    }
+    .feedback-items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      text-align: left;
+    }
+    .feedback-item {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .feedback-item h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--primary-dark);
+    }
+    .feedback-item p {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin: 0;
+    }
+
+    /* ══════ Footer ══════ */
+    footer {
+      background: var(--gray-900);
+      color: rgba(255,255,255,0.5);
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    /* ══════ Responsive ══════ */
+    @media (max-width: 768px) {
+      .hero { padding: 48px 20px 40px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 15px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .page-card { grid-template-columns: 1fr; }
+      .page-card:nth-child(even) { direction: ltr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .feedback-items { grid-template-columns: 1fr; }
+      .pipeline { flex-direction: column; }
+      .pipeline-arrow { transform: rotate(90deg); }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .arch-flow { flex-direction: column; }
+      .arch-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-badge">WORK IN PROGRESS</div>
+  <h1><span>손익 드릴다운</span> 레포트</h1>
+  <p>제약회사 본부장 성과발표용 인터랙티브 웹 대시보드<br>기존 PPT(엑셀 표 붙여넣기)를 대체하는 드릴다운 분석 도구</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- STATS BAR -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="stat-number">5</div>
+    <div class="stat-label">구현된 페이지</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">8</div>
+    <div class="stat-label">React 컴포넌트</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">4</div>
+    <div class="stat-label">JSON 데이터 소스</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">44</div>
+    <div class="stat-label">손익 항목</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 프로젝트 개요 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <h2 class="section-title">프로젝트 개요</h2>
+    <p class="section-subtitle">기존 PPT 성과발표 방식의 한계를 해결하는 인터랙티브 대시보드</p>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <h3><span class="icon">&#x1F3AF;</span> 핵심 목표</h3>
+        <ul>
+          <li><strong>드릴다운 분석</strong> — 전사 → 사업부 → 품목 → 품목코드까지 즉시 탐색</li>
+          <li><strong>전년동기비 비교</strong> — 모든 수치에 대한 증감 분석 자동 표시</li>
+          <li><strong>실시간 발표 지원</strong> — 평가자가 발표 중 세부 질문 시 즉시 데이터 확인</li>
+          <li><strong>모바일 대응</strong> — 휴대폰에서도 동일한 분석 기능 제공</li>
+        </ul>
+      </div>
+      <div class="overview-card">
+        <h3><span class="icon">&#x1F4CA;</span> 분석 범위</h3>
+        <ul>
+          <li><strong>사업부 7개</strong> — ETC, CH, 건기식, 나보타, 글로벌, 수탁, 기타</li>
+          <li><strong>손익 항목 44개</strong> — 매출 → 매출원가 → 비용(7종) → R&D → 영업이익</li>
+          <li><strong>기간</strong> — 분기별(1Q~4Q) 및 연간 분석, 최근 3분기/3개년 추이</li>
+          <li><strong>비용 세부항목</strong> — 전표 레벨(구분3) 드릴다운 지원</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="arch-diagram">
+      <h3 style="text-align:center; font-size:16px; margin-bottom:24px; color:rgba(255,255,255,0.6);">시스템 구조</h3>
+      <div class="arch-flow">
+        <div class="arch-box">
+          <div class="label">Data Source</div>
+          <div class="name">Excel 파일 3종</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">
+          <div class="label">Transform</div>
+          <div class="name">Python 스크립트</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box highlight">
+          <div class="label">Static Data</div>
+          <div class="name">JSON 4종</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">
+          <div class="label">Frontend</div>
+          <div class="name">React SPA</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">
+          <div class="label">Deploy</div>
+          <div class="name">Vercel (정적)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 구현된 화면 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section style="background: var(--gray-50);">
+  <div class="container">
+    <h2 class="section-title">구현된 화면</h2>
+    <p class="section-subtitle">현재 개발 완료된 5개 페이지의 주요 기능</p>
+
+    <div class="page-showcase">
+
+      <!-- Page 1: 전사 손익 총괄 -->
+      <div class="page-card">
+        <div class="page-info">
+          <div class="page-number">1</div>
+          <h3>전사 손익 총괄</h3>
+          <div class="page-route">/  (메인)</div>
+          <p>전사 기준 손익계산서를 분기별/연간으로 조회하고, 사업부별 매출 구성을 드릴다운하는 메인 페이지입니다.</p>
+          <ul class="feature-list">
+            <li>연도/분기 선택으로 기간 전환 (1Q~4Q, 연간)</li>
+            <li>전년동기 + 직전 3분기(또는 3개년) 추이 표시</li>
+            <li>전년동기比 증감 금액 + 매출비 %p 자동 계산</li>
+            <li>매출/매출원가 클릭 → 사업부별 금액 펼침</li>
+            <li>비용 항목 클릭 → 세부항목(level1) 아코디언</li>
+            <li>사업부 클릭 → 사업부별 손익 페이지로 이동</li>
+          </ul>
+        </div>
+        <div class="page-preview">
+          <div class="preview-titlebar">
+            <div class="preview-dot red"></div>
+            <div class="preview-dot yellow"></div>
+            <div class="preview-dot green"></div>
+            <div class="preview-url">localhost:5173/</div>
+          </div>
+          <div class="preview-body">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <strong style="font-size:14px;">전사 손익 총괄</strong>
+              <div style="display:flex; gap:4px;">
+                <span style="background:var(--primary);color:white;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;">1Q</span>
+                <span style="background:var(--gray-100);color:var(--gray-500);padding:2px 8px;border-radius:4px;font-size:10px;">2Q</span>
+                <span style="background:var(--gray-100);color:var(--gray-500);padding:2px 8px;border-radius:4px;font-size:10px;">연간</span>
+              </div>
+            </div>
+            <div style="text-align:right;font-size:9px;color:var(--gray-400);margin-bottom:4px;">단위 : 억원</div>
+            <table class="mini-table">
+              <thead>
+                <tr>
+                  <th>항목</th>
+                  <th>24.1Q</th>
+                  <th>24.4Q</th>
+                  <th style="background:var(--primary-dark);">25.1Q</th>
+                  <th>전년비</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>▶ 매출</strong></td>
+                  <td>3,280</td>
+                  <td>3,410</td>
+                  <td><strong>3,520</strong></td>
+                  <td class="text-increase">(+)240</td>
+                </tr>
+                <tr class="sub-row">
+                  <td>&nbsp;&nbsp;&nbsp;ETC ▸</td>
+                  <td>1,850</td>
+                  <td>1,920</td>
+                  <td><strong>1,980</strong></td>
+                  <td class="text-increase">(+)130</td>
+                </tr>
+                <tr class="sub-row">
+                  <td>&nbsp;&nbsp;&nbsp;CH ▸</td>
+                  <td>680</td>
+                  <td>710</td>
+                  <td><strong>740</strong></td>
+                  <td class="text-increase">(+)60</td>
+                </tr>
+                <tr>
+                  <td><strong>▶ 매출원가</strong></td>
+                  <td>1,640</td>
+                  <td>1,690</td>
+                  <td><strong>1,730</strong></td>
+                  <td class="text-decrease">(+)90</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>매출총이익</strong></td>
+                  <td>1,640</td>
+                  <td>1,720</td>
+                  <td><strong>1,790</strong></td>
+                  <td class="text-increase">(+)150</td>
+                </tr>
+                <tr>
+                  <td><strong>▶ 영업판관비</strong></td>
+                  <td>420</td>
+                  <td>440</td>
+                  <td><strong>460</strong></td>
+                  <td class="text-decrease">(+)40</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>영업이익</strong></td>
+                  <td>380</td>
+                  <td>410</td>
+                  <td><strong>430</strong></td>
+                  <td class="text-increase">(+)50</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:8px;color:var(--gray-400);margin-top:6px;text-align:center;">* 예시 데이터 (실제 수치와 다름)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2: 사업부별 손익 -->
+      <div class="page-card">
+        <div class="page-info">
+          <div class="page-number">2</div>
+          <h3>사업부별 손익</h3>
+          <div class="page-route">/division</div>
+          <p>개별 사업부의 손익을 상세 분석하고, 매출/원가를 품목 단위까지 드릴다운합니다.</p>
+          <ul class="feature-list">
+            <li>사업부 탭 전환 (ETC/CH/건기식/나보타/글로벌/수탁/기타)</li>
+            <li>사업부별 손익 테이블 (전사 손익과 동일 구조)</li>
+            <li>매출/매출원가 클릭 → 품목 드릴다운 패널 표시</li>
+            <li>사업부별 맞춤 드릴다운 계층 (제상→중분류→수익군→품목구분)</li>
+            <li>매출 증감 요인 워터폴 차트 (상위 증/감 품목)</li>
+            <li>품목구분 선택 → 품목 상세 패널 (월별 추이, 원가율, 품목코드)</li>
+          </ul>
+        </div>
+        <div class="page-preview">
+          <div class="preview-titlebar">
+            <div class="preview-dot red"></div>
+            <div class="preview-dot yellow"></div>
+            <div class="preview-dot green"></div>
+            <div class="preview-url">localhost:5173/division?division=ETC</div>
+          </div>
+          <div class="preview-body">
+            <div class="div-tabs">
+              <div class="div-tab active" style="background:#F5A623;">ETC</div>
+              <div class="div-tab inactive">CH</div>
+              <div class="div-tab inactive">건기식</div>
+              <div class="div-tab inactive">나보타</div>
+              <div class="div-tab inactive">글로벌</div>
+            </div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px;">ETC 사업부 손익</div>
+
+            <!-- Mini Waterfall -->
+            <div class="mini-chart">
+              <div class="mini-chart-title">매출 증감 요인 (25.1Q 전년비, 억원)</div>
+              <div class="bar-group">
+                <div style="text-align:center;flex:1;">
+                  <div class="bar" style="height:50px;background:var(--increase);"></div>
+                  <div class="bar-label">제상A</div>
+                </div>
+                <div style="text-align:center;flex:1;">
+                  <div class="bar" style="height:35px;background:var(--increase);"></div>
+                  <div class="bar-label">제상B</div>
+                </div>
+                <div style="text-align:center;flex:1;">
+                  <div class="bar" style="height:20px;background:var(--increase);"></div>
+                  <div class="bar-label">제상C</div>
+                </div>
+                <div style="text-align:center;flex:1;">
+                  <div class="bar" style="height:15px;background:var(--decrease);"></div>
+                  <div class="bar-label">제상D</div>
+                </div>
+                <div style="text-align:center;flex:1;">
+                  <div class="bar" style="height:40px;background:#333;"></div>
+                  <div class="bar-label">합계</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mini-breadcrumb">
+              <span class="current">ETC 매출</span>
+              <span>></span>
+              <span class="current">제상</span>
+              <span>></span>
+              <span style="color:var(--gray-300);">중분류</span>
+            </div>
+
+            <table class="mini-table">
+              <thead>
+                <tr>
+                  <th>제상</th>
+                  <th>매출</th>
+                  <th>전년비</th>
+                  <th>원가</th>
+                  <th>원가율</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>전문의약품 ▸</td>
+                  <td>1,420</td>
+                  <td class="text-increase">+85</td>
+                  <td>680</td>
+                  <td>47.9%</td>
+                </tr>
+                <tr>
+                  <td>일반의약품 ▸</td>
+                  <td>380</td>
+                  <td class="text-increase">+32</td>
+                  <td>195</td>
+                  <td>51.3%</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:8px;color:var(--gray-400);margin-top:6px;text-align:center;">* 예시 데이터</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 3: 원가 분석 -->
+      <div class="page-card">
+        <div class="page-info">
+          <div class="page-number">3</div>
+          <h3>원가 분석</h3>
+          <div class="page-route">/cost</div>
+          <p>사업부별 원가율을 비교 분석하고, 분기 추이 및 품목별 원가 구조를 파악합니다.</p>
+          <ul class="feature-list">
+            <li>분기별 원가율 추이 라인 차트 (최근 8분기)</li>
+            <li>사업부별 원가율 비교 바 차트 (당기 vs 전년)</li>
+            <li>사업부별 원가율 테이블 (매출/원가/원가율/전년비)</li>
+            <li>사업부 클릭 → 품목별 원가율 상세 테이블</li>
+            <li>원가율 증감 색상 표시 (개선=파랑, 악화=빨강)</li>
+          </ul>
+        </div>
+        <div class="page-preview">
+          <div class="preview-titlebar">
+            <div class="preview-dot red"></div>
+            <div class="preview-dot yellow"></div>
+            <div class="preview-dot green"></div>
+            <div class="preview-url">localhost:5173/cost</div>
+          </div>
+          <div class="preview-body">
+            <div style="font-size:14px;font-weight:700;margin-bottom:12px;">원가 분석</div>
+
+            <!-- Trend Line Chart mockup -->
+            <div class="mini-chart">
+              <div class="mini-chart-title">분기별 원가율 추이 (%)</div>
+              <svg class="trend-svg" viewBox="0 0 300 70">
+                <!-- Grid lines -->
+                <line x1="0" y1="15" x2="300" y2="15" stroke="#f0f0f0" stroke-width="0.5"/>
+                <line x1="0" y1="35" x2="300" y2="35" stroke="#f0f0f0" stroke-width="0.5"/>
+                <line x1="0" y1="55" x2="300" y2="55" stroke="#f0f0f0" stroke-width="0.5"/>
+                <!-- 전사 line -->
+                <polyline points="10,40 50,38 90,42 130,35 170,37 210,33 250,36 290,32"
+                  fill="none" stroke="#1A1A1A" stroke-width="2"/>
+                <!-- ETC line -->
+                <polyline points="10,35 50,33 90,37 130,30 170,32 210,28 250,31 290,27"
+                  fill="none" stroke="#F5A623" stroke-width="1.5" stroke-dasharray="4,2"/>
+                <!-- CH line -->
+                <polyline points="10,50 50,48 90,52 130,45 170,47 210,43 250,46 290,42"
+                  fill="none" stroke="#4CAF50" stroke-width="1.5" stroke-dasharray="4,2"/>
+                <!-- Labels -->
+                <text x="8" y="65" font-size="7" fill="#999">24.1Q</text>
+                <text x="130" y="65" font-size="7" fill="#999">24.4Q</text>
+                <text x="250" y="65" font-size="7" fill="#999">25.4Q</text>
+              </svg>
+              <div style="display:flex;gap:12px;font-size:9px;color:var(--gray-500);justify-content:center;">
+                <span>━━ 전사</span>
+                <span style="color:#F5A623;">--- ETC</span>
+                <span style="color:#4CAF50;">--- CH</span>
+              </div>
+            </div>
+
+            <table class="mini-table">
+              <thead>
+                <tr>
+                  <th>사업부</th>
+                  <th>매출</th>
+                  <th>원가</th>
+                  <th>원가율</th>
+                  <th>전년</th>
+                  <th>증감</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#F5A623;margin-right:4px;vertical-align:middle;"></span>ETC ▸</td>
+                  <td>1,980</td>
+                  <td>960</td>
+                  <td><strong>48.5%</strong></td>
+                  <td>49.2%</td>
+                  <td class="text-increase">-0.7%p</td>
+                </tr>
+                <tr>
+                  <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4CAF50;margin-right:4px;vertical-align:middle;"></span>CH ▸</td>
+                  <td>740</td>
+                  <td>380</td>
+                  <td><strong>51.4%</strong></td>
+                  <td>50.8%</td>
+                  <td class="text-decrease">+0.6%p</td>
+                </tr>
+                <tr style="background:var(--gray-50);font-weight:600;">
+                  <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1A1A1A;margin-right:4px;vertical-align:middle;"></span>전사</td>
+                  <td>3,520</td>
+                  <td>1,730</td>
+                  <td><strong>49.1%</strong></td>
+                  <td>50.0%</td>
+                  <td class="text-increase">-0.9%p</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:8px;color:var(--gray-400);margin-top:6px;text-align:center;">* 예시 데이터</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 4: 비용 분석 -->
+      <div class="page-card">
+        <div class="page-info">
+          <div class="page-number">4</div>
+          <h3>비용 분석</h3>
+          <div class="page-route">/expense</div>
+          <p>7개 비용 대분류별 현황과 전년비를 분석하고, 전표 레벨까지 세부 드릴다운합니다.</p>
+          <ul class="feature-list">
+            <li>KPI 카드 (총 비용, 매출대비 비율, R&D비용, 영업판관비)</li>
+            <li>비용 대분류별 비교 바 차트 (당기 vs 전년)</li>
+            <li>비용 항목별 전년비 증감 차트 (증가=빨강, 감소=파랑)</li>
+            <li>비용 항목 확장 → 세부항목(level1) 아코디언</li>
+            <li>"상세" 버튼 → RAW(E) 전표 기반 구분3 드릴다운 패널</li>
+            <li>구분3 → 사업구분별(직접/공통) 내역 차트+테이블</li>
+            <li>사업부별 비용 배분 교차 테이블</li>
+          </ul>
+        </div>
+        <div class="page-preview">
+          <div class="preview-titlebar">
+            <div class="preview-dot red"></div>
+            <div class="preview-dot yellow"></div>
+            <div class="preview-dot green"></div>
+            <div class="preview-url">localhost:5173/expense</div>
+          </div>
+          <div class="preview-body">
+            <div style="font-size:14px;font-weight:700;margin-bottom:12px;">비용 분석</div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-row">
+              <div class="kpi-card">
+                <div class="kpi-label">총 비용</div>
+                <div class="kpi-value" style="font-size:14px;">1,280<span style="font-size:9px;color:var(--gray-400);"> 억원</span></div>
+                <div class="kpi-delta text-increase" style="font-size:9px;">-32</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-label">매출대비</div>
+                <div class="kpi-value" style="font-size:14px;">36.4%</div>
+                <div class="kpi-delta text-increase" style="font-size:9px;">-1.2%p</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-label">R&D비용</div>
+                <div class="kpi-value" style="font-size:14px;">320<span style="font-size:9px;color:var(--gray-400);"> 억원</span></div>
+                <div class="kpi-delta text-decrease" style="font-size:9px;">+15</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-label">영업판관비</div>
+                <div class="kpi-value" style="font-size:14px;">460<span style="font-size:9px;color:var(--gray-400);"> 억원</span></div>
+                <div class="kpi-delta text-decrease" style="font-size:9px;">+28</div>
+              </div>
+            </div>
+
+            <table class="mini-table">
+              <thead>
+                <tr>
+                  <th>비용 항목</th>
+                  <th>금액</th>
+                  <th>매출비</th>
+                  <th>증감</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>▸ 영업판관비</strong></td>
+                  <td>460</td>
+                  <td>13.1%</td>
+                  <td class="text-decrease">+28</td>
+                  <td><span style="font-size:8px;background:var(--gray-100);padding:1px 4px;border-radius:2px;color:var(--gray-400);">상세</span></td>
+                </tr>
+                <tr class="sub-row">
+                  <td>영업비용</td>
+                  <td>180</td>
+                  <td>5.1%</td>
+                  <td class="text-decrease">+12</td>
+                  <td></td>
+                </tr>
+                <tr class="sub-row">
+                  <td>마케팅비용</td>
+                  <td>120</td>
+                  <td>3.4%</td>
+                  <td class="text-increase">-5</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><strong>▸ R&D비용</strong></td>
+                  <td>320</td>
+                  <td>9.1%</td>
+                  <td class="text-decrease">+15</td>
+                  <td><span style="font-size:8px;background:var(--gray-100);padding:1px 4px;border-radius:2px;color:var(--gray-400);">상세</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:8px;color:var(--gray-400);margin-top:6px;text-align:center;">* 예시 데이터</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 5: 품목 상세 -->
+      <div class="page-card">
+        <div class="page-info">
+          <div class="page-number">5</div>
+          <h3>품목 상세 패널</h3>
+          <div class="page-route">컴포넌트: ProductDetail</div>
+          <p>개별 품목의 월별 매출 추이, 원가율 변화, 품목코드별 상세 데이터를 확인하는 드릴다운 최하위 패널입니다.</p>
+          <ul class="feature-list">
+            <li>월별 매출 추이 라인 차트 (당해 vs 전년)</li>
+            <li>월별 원가율 추이 라인 차트</li>
+            <li>월별 전년동기비 상세 테이블 (12개월)</li>
+            <li>"품목코드 상세 보기" → 개별 품목코드 매출/원가/원가율</li>
+            <li>품목코드 레벨 전년비 증감 표시</li>
+          </ul>
+        </div>
+        <div class="page-preview">
+          <div class="preview-titlebar">
+            <div class="preview-dot red"></div>
+            <div class="preview-dot yellow"></div>
+            <div class="preview-dot green"></div>
+            <div class="preview-url">ProductDetail (Embedded Panel)</div>
+          </div>
+          <div class="preview-body">
+            <div style="background:var(--primary);color:white;padding:8px 12px;border-radius:8px 8px 0 0;font-weight:700;font-size:13px;display:flex;justify-content:space-between;">
+              <span>펙수클루 상세</span>
+              <span style="opacity:0.6;">×</span>
+            </div>
+
+            <!-- Mini line chart -->
+            <div class="mini-chart" style="margin-top:0;border-radius:0 0 8px 8px;">
+              <div class="mini-chart-title">월별 매출 추이 (억원)</div>
+              <svg class="trend-svg" viewBox="0 0 300 60">
+                <polyline points="10,45 35,40 60,30 85,35 110,25 135,20 160,28 185,22 210,18 235,25 260,20 285,15"
+                  fill="none" stroke="#F5A623" stroke-width="2"/>
+                <polyline points="10,50 35,48 60,42 85,45 110,38 135,35 160,40 185,37 210,32 235,38 260,35 285,30"
+                  fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="4,2"/>
+                <text x="8" y="58" font-size="7" fill="#999">1월</text>
+                <text x="150" y="58" font-size="7" fill="#999">7월</text>
+                <text x="275" y="58" font-size="7" fill="#999">12월</text>
+              </svg>
+              <div style="display:flex;gap:12px;font-size:9px;color:var(--gray-500);justify-content:center;">
+                <span style="color:#F5A623;">━━ 2025년</span>
+                <span>--- 2024년</span>
+              </div>
+            </div>
+
+            <table class="mini-table" style="margin-top:8px;">
+              <thead>
+                <tr style="background:#333;">
+                  <th style="color:white;">품목코드</th>
+                  <th style="color:white;">매출</th>
+                  <th style="color:white;">원가</th>
+                  <th style="color:white;">원가율</th>
+                  <th style="color:white;">증감</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-family:monospace;font-size:10px;">PKS-100mg</td>
+                  <td>85.2</td>
+                  <td>38.4</td>
+                  <td>45.1%</td>
+                  <td class="text-increase">+12.3</td>
+                </tr>
+                <tr>
+                  <td style="font-family:monospace;font-size:10px;">PKS-250mg</td>
+                  <td>42.8</td>
+                  <td>21.1</td>
+                  <td>49.3%</td>
+                  <td class="text-decrease">-3.1</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size:8px;color:var(--gray-400);margin-top:6px;text-align:center;">* 예시 데이터</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 드릴다운 구조 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <h2 class="section-title">드릴다운 구조</h2>
+    <p class="section-subtitle">클릭 한 번으로 전사 → 품목코드까지 탐색하는 계층형 분석</p>
+
+    <div class="drilldown-section">
+      <div class="drill-flow">
+        <div class="drill-row">
+          <div class="drill-label">매출/원가</div>
+          <div class="drill-steps">
+            <div class="drill-step active">전사 손익</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">사업부 선택</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">제상/중분류</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">수익군</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">품목구분</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">품목코드</div>
+          </div>
+        </div>
+        <div class="drill-row">
+          <div class="drill-label">비용</div>
+          <div class="drill-steps">
+            <div class="drill-step active">전사 비용</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">대분류(7종)</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">세부항목</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">구분3 (전표)</div>
+            <span class="drill-step-arrow">→</span>
+            <div class="drill-step">사업구분</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 데이터 파이프라인 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section style="background: var(--gray-50);">
+  <div class="container">
+    <h2 class="section-title">데이터 파이프라인</h2>
+    <p class="section-subtitle">엑셀 원본에서 JSON 데이터까지의 변환 흐름</p>
+
+    <div class="pipeline">
+      <div class="pipeline-stage source">
+        <div class="stage-label">Excel 원본</div>
+        <div class="stage-items">
+          월별손익.xlsx<br>
+          S_C_raw.xlsx<br>
+          RAW_E__20XX.xlsx
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-stage process">
+        <div class="stage-label">Python 변환</div>
+        <div class="stage-items">
+          scripts/<br>
+          pandas 기반<br>
+          억원 단위 변환
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-stage output">
+        <div class="stage-label">JSON 출력</div>
+        <div class="stage-items">
+          pl_monthly.json<br>
+          sales_cost_summary.json<br>
+          sales_cost_raw.json<br>
+          expense_detail.json
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-stage" style="border-color: var(--primary);">
+        <div class="stage-label" style="color: var(--primary);">React App</div>
+        <div class="stage-items">
+          정적 JSON fetch<br>
+          클라이언트 집계<br>
+          인터랙티브 UI
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 기술 스택 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <h2 class="section-title">기술 스택</h2>
+    <p class="section-subtitle">백엔드 없는 정적 SPA 구조 — 빌드 결과물만으로 배포 가능</p>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-icon" style="background:#E3F2FD;color:#1565C0;">R</div>
+        <h4>React 19 + Vite</h4>
+        <p>최신 React를 Vite 빌드 도구로 빠른 개발 환경 구성</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon" style="background:#E8F5E9;color:#2E7D32;">Tw</div>
+        <h4>Tailwind CSS v4</h4>
+        <p>유틸리티 퍼스트 CSS로 반응형 레이아웃 구현</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon" style="background:#FFF3E0;color:#E65100;">Re</div>
+        <h4>Recharts</h4>
+        <p>React 네이티브 차트 라이브러리 (라인, 바, 워터폴)</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon" style="background:#F3E5F5;color:#7B1FA2;">RR</div>
+        <h4>React Router v7</h4>
+        <p>SPA 라우팅으로 페이지 간 네비게이션 처리</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon" style="background:#FFEBEE;color:#C62828;">Py</div>
+        <h4>Python (pandas)</h4>
+        <p>엑셀 → JSON 변환 스크립트로 데이터 전처리</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon" style="background:#E0E0E0;color:#424242;">▲</div>
+        <h4>Vercel 배포</h4>
+        <p>정적 빌드 배포, CDN 최적화, 커스텀 도메인 지원</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 프로젝트 구조 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section style="background: var(--gray-50);">
+  <div class="container">
+    <h2 class="section-title">프로젝트 구조</h2>
+    <p class="section-subtitle">컴포넌트 및 데이터 파일 구성</p>
+
+    <div class="file-tree">
+<span class="folder">src/</span>
+├── <span class="file">App.jsx</span>               <span class="comment">← 라우팅 설정 (5개 경로)</span>
+├── <span class="file">index.css</span>             <span class="comment">← Tailwind + 커스텀 테마 (주황/노랑 톤)</span>
+├── <span class="folder">pages/</span>
+│   ├── <span class="component">CompanySummary.jsx</span>   <span class="comment">← 전사 손익 총괄 (메인)</span>
+│   ├── <span class="component">DivisionPL.jsx</span>      <span class="comment">← 사업부별 손익 + 품목 드릴다운</span>
+│   ├── <span class="component">CostRateAnalysis.jsx</span> <span class="comment">← 원가율 분석 + 추이 차트</span>
+│   ├── <span class="component">ExpenseAnalysis.jsx</span>  <span class="comment">← 비용 분석 + RAW(E) 드릴다운</span>
+│   └── <span class="component">SalesCostAnalysis.jsx</span> <span class="comment">← (미사용, 라우팅 미연결)</span>
+├── <span class="folder">components/</span>
+│   ├── <span class="component">Layout.jsx</span>          <span class="comment">← 사이드바(PC) + 하단탭(모바일)</span>
+│   ├── <span class="component">ProductDetail.jsx</span>   <span class="comment">← 품목 상세 (월별 추이, 품목코드)</span>
+│   └── <span class="component">ExpenseDrilldown.jsx</span> <span class="comment">← 비용 구분3 세부항목 드릴다운</span>
+├── <span class="folder">hooks/</span>
+│   └── <span class="file">useData.js</span>          <span class="comment">← JSON 데이터 fetch 훅</span>
+└── <span class="folder">utils/</span>
+    ├── <span class="file">constants.js</span>       <span class="comment">← 사업부 목록, 44개 PL 항목, 색상</span>
+    └── <span class="file">formatters.js</span>      <span class="comment">← 억원/% 포맷 함수</span>
+
+<span class="folder">public/data/</span>
+├── <span class="file">pl_monthly.json</span>        <span class="comment">← 전사/사업부별 월별 손익 (44항목)</span>
+├── <span class="file">sales_cost_summary.json</span> <span class="comment">← 품목별 매출/원가 요약</span>
+├── <span class="file">sales_cost_raw.json</span>    <span class="comment">← 품목코드 레벨 상세</span>
+└── <span class="file">expense_detail.json</span>    <span class="comment">← 비용 전표 상세 (구분3)</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 개발 현황 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <h2 class="section-title">개발 현황</h2>
+    <p class="section-subtitle">현재 구현 상태 및 향후 작업 항목</p>
+
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th style="width:30%;">기능</th>
+          <th style="width:15%;">상태</th>
+          <th>설명</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>엑셀 → JSON 변환</strong></td>
+          <td><span class="status-badge status-done">완료</span></td>
+          <td>Python 스크립트로 3종 엑셀에서 4종 JSON 생성</td>
+        </tr>
+        <tr>
+          <td><strong>전사 손익 총괄</strong></td>
+          <td><span class="status-badge status-done">완료</span></td>
+          <td>분기/연간 전환, 사업부 드릴다운, 전년동기비</td>
+        </tr>
+        <tr>
+          <td><strong>사업부별 손익</strong></td>
+          <td><span class="status-badge status-done">완료</span></td>
+          <td>7개 사업부 탭, 품목 드릴다운 (4단계), 워터폴 차트</td>
+        </tr>
+        <tr>
+          <td><strong>원가율 분석</strong></td>
+          <td><span class="status-badge status-done">완료</span></td>
+          <td>분기 추이 차트, 사업부별 비교, 품목별 원가율</td>
+        </tr>
+        <tr>
+          <td><strong>비용 분석</strong></td>
+          <td><span class="status-badge status-done">완료</span></td>
+          <td>KPI 카드, 대분류 비교, RAW(E) 세부항목 드릴다운, 사업부 배분</td>
+        </tr>
+        <tr>
+          <td><strong>품목 상세 패널</strong></td>
+          <td><span class="status-badge status-done">완료</span></td>
+          <td>월별 추이 차트, 원가율 변화, 품목코드별 상세</td>
+        </tr>
+        <tr>
+          <td><strong>반응형 레이아웃</strong></td>
+          <td><span class="status-badge status-done">완료</span></td>
+          <td>PC 사이드바 + 모바일 하단탭, 테이블 가로 스크롤</td>
+        </tr>
+        <tr>
+          <td><strong>UI/UX 정교화</strong></td>
+          <td><span class="status-badge status-partial">진행 중</span></td>
+          <td>색상 미세 조정, 모바일 터치 최적화, 로딩 상태 개선</td>
+        </tr>
+        <tr>
+          <td><strong>데이터 검증</strong></td>
+          <td><span class="status-badge status-partial">진행 중</span></td>
+          <td>JSON 데이터와 원본 엑셀 간 수치 정합성 확인</td>
+        </tr>
+        <tr>
+          <td><strong>운영 배포</strong></td>
+          <td><span class="status-badge status-planned">예정</span></td>
+          <td>Vercel 배포 설정, 커스텀 도메인, 접근 제어</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- 피드백 요청 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <div class="feedback-section">
+      <h3>피드백 요청 사항</h3>
+      <p>아래 항목에 대해 의견을 주시면 반영하겠습니다</p>
+      <div class="feedback-items">
+        <div class="feedback-item">
+          <h4>1. 화면 구성</h4>
+          <p>페이지 간 네비게이션 구조가 직관적인가? 추가되어야 할 화면이 있는가?</p>
+        </div>
+        <div class="feedback-item">
+          <h4>2. 드릴다운 깊이</h4>
+          <p>현재 드릴다운 단계가 적절한가? 더 깊거나 얕아야 할 항목이 있는가?</p>
+        </div>
+        <div class="feedback-item">
+          <h4>3. 데이터 표시</h4>
+          <p>금액/비율 포맷, 증감 색상 표시, 비교 기간 설정이 적절한가?</p>
+        </div>
+        <div class="feedback-item">
+          <h4>4. 차트 구성</h4>
+          <p>워터폴/라인/바 차트 외 추가 시각화가 필요한 항목이 있는가?</p>
+        </div>
+        <div class="feedback-item">
+          <h4>5. 모바일 사용성</h4>
+          <p>휴대폰에서 확인할 때 불편한 점이 있는가? 테이블 스크롤 방향 등</p>
+        </div>
+        <div class="feedback-item">
+          <h4>6. 기타 요구사항</h4>
+          <p>발표 시 필요한 추가 기능 (인쇄, PDF 내보내기, 특정 뷰 등)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>손익 드릴다운 레포트 — 프로젝트 현황 문서 | 2025년 3월 기준</p>
+</footer>
+
+</body>
+</html>

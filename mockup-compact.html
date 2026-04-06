@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공백 비교 - 현재 vs 컴팩트</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/npm/wanted-sans@1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Wanted Sans Variable', 'Wanted Sans', sans-serif;
+    background: #f3f4f6;
+    color: #1a1a1a;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .compare { display: flex; gap: 24px; padding: 16px; }
+  .panel { flex: 1; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .panel-label { background: #333; color: #fff; text-align: center; padding: 8px; font-size: 13px; font-weight: 600; }
+
+  /* ── 공통 테이블 스타일 ── */
+  table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+  th { background: #F5A623; color: #fff; font-weight: 600; text-align: center; }
+  .row-label { text-align: left !important; background: #fff; font-weight: 500; }
+  .highlight td, .highlight .row-label { background: #FFF8EC !important; font-weight: 700; }
+  .drillable { font-weight: 600; cursor: pointer; }
+  .sub-row td { color: #666; }
+  .sub-row .row-label { font-weight: 400; }
+  td { text-align: right; border-bottom: 1px solid #f0f0f0; border-left: 1px solid #d1d5db; }
+  td:first-child { border-left: none; }
+  th { border-left: 1px solid rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.6); }
+  th:first-child { border-left: none; }
+  .ratio { color: #E09000; }
+  .up { color: #1565C0; }
+  .down { color: #D32F2F; }
+  .current { background: #f9fafb; }
+  .current.highlight-cell { background: #FFF8EC; }
+  .arrow { color: #bbb; margin-right: 3px; }
+
+  /* ── 현재 버전 (넓은 패딩) ── */
+  .current-ver .header { padding: 12px 16px; margin-bottom: 16px; }
+  .current-ver .header h2 { font-size: 18px; font-weight: 700; }
+  .current-ver .unit { text-align: right; font-size: 11px; color: #999; margin: 0 16px 4px; }
+  .current-ver .table-wrap { padding: 0 16px 16px; }
+  .current-ver th { padding: 8px 10px; font-size: 12px; }
+  .current-ver td { padding: 7px 10px; font-size: 13px; }
+  .current-ver .ratio { font-size: 11px; }
+  .current-ver .sub-row .row-label { padding-left: 32px; }
+
+  /* ── 컴팩트 버전 (축소 패딩) ── */
+  .compact-ver .header { padding: 6px 10px; margin-bottom: 8px; }
+  .compact-ver .header h2 { font-size: 15px; font-weight: 700; }
+  .compact-ver .unit { text-align: right; font-size: 10px; color: #999; margin: 0 10px 2px; }
+  .compact-ver .table-wrap { padding: 0 10px 10px; }
+  .compact-ver th { padding: 4px 6px; font-size: 11px; }
+  .compact-ver td { padding: 3px 6px; font-size: 12px; }
+  .compact-ver .ratio { font-size: 10px; }
+  .compact-ver .sub-row .row-label { padding-left: 24px; }
+
+  .tab-group { display: inline-flex; background: #f3f4f6; border-radius: 6px; padding: 2px; }
+  .tab-group button { border: none; background: none; padding: 4px 10px; border-radius: 4px; font-family: inherit; font-size: 11px; color: #666; cursor: pointer; }
+  .tab-group button.active { background: #F5A623; color: #fff; font-weight: 600; }
+
+  .cell-grid { display: grid; gap: 0; grid-template-columns: 1fr 50px; }
+  .compact-ver .cell-grid { grid-template-columns: 1fr 44px; }
+  .cell-grid span { text-align: right; }
+
+  .delta-grid { display: grid; gap: 0; grid-template-columns: 1fr 55px; }
+  .compact-ver .delta-grid { grid-template-columns: 1fr 48px; }
+  .delta-grid span { text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="compare">
+
+<!-- ════ 현재 버전 ════ -->
+<div class="panel">
+  <div class="panel-label">현재 (넓은 패딩)</div>
+  <div class="current-ver">
+    <div class="header">
+      <h2 style="display:inline">전사 손익 총괄</h2>
+      <div class="tab-group" style="float:right">
+        <button>1Q</button><button>2Q</button><button class="active">3Q</button><button>4Q</button><button>연간</button>
+      </div>
+    </div>
+    <div class="unit">단위 : 억원</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="row-label" style="background:#F5A623;color:#fff;min-width:110px" rowspan="2">항목</th>
+            <th colspan="1">전년 동기</th>
+            <th colspan="3">직전 3분기</th>
+            <th colspan="1">당기</th>
+            <th rowspan="2">전년 동기比</th>
+          </tr>
+          <tr>
+            <th>24.3Q</th><th>24.4Q</th><th>25.1Q</th><th>25.2Q</th><th>25.3Q</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 매출액</td>
+            <td><div class="cell-grid"><span>3,159</span><span></span></div></td>
+            <td><div class="cell-grid"><span>3,273</span><span></span></div></td>
+            <td><div class="cell-grid"><span>3,162</span><span></span></div></td>
+            <td><div class="cell-grid"><span>3,639</span><span></span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">3,551</span><span></span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)392</span><span class="up">12.4%</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 매출원가</td>
+            <td><div class="cell-grid"><span>1,555</span><span class="ratio">49.2%</span></div></td>
+            <td><div class="cell-grid"><span>1,587</span><span class="ratio">48.5%</span></div></td>
+            <td><div class="cell-grid"><span>1,538</span><span class="ratio">48.6%</span></div></td>
+            <td><div class="cell-grid"><span>1,710</span><span class="ratio">47.0%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">1,726</span><span class="ratio">48.6%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)171</span><span class="down">-0.6%p</span></div></td>
+          </tr>
+          <tr class="highlight"><td class="row-label">매출총이익</td>
+            <td><div class="cell-grid"><span>1,605</span><span class="ratio">50.8%</span></div></td>
+            <td><div class="cell-grid"><span>1,687</span><span class="ratio">51.5%</span></div></td>
+            <td><div class="cell-grid"><span>1,624</span><span class="ratio">51.4%</span></div></td>
+            <td><div class="cell-grid"><span>1,929</span><span class="ratio">53.0%</span></div></td>
+            <td class="current highlight-cell"><div class="cell-grid"><span style="font-weight:600">1,825</span><span class="ratio">51.4%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)220</span><span class="up">0.6%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 영업판관비</td>
+            <td><div class="cell-grid"><span>405</span><span class="ratio">12.8%</span></div></td>
+            <td><div class="cell-grid"><span>403</span><span class="ratio">12.3%</span></div></td>
+            <td><div class="cell-grid"><span>371</span><span class="ratio">11.7%</span></div></td>
+            <td><div class="cell-grid"><span>458</span><span class="ratio">12.6%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">453</span><span class="ratio">12.8%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)48</span><span class="down">-0.1%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 판매대행수수료</td>
+            <td><div class="cell-grid"><span>116</span><span class="ratio">3.7%</span></div></td>
+            <td><div class="cell-grid"><span>120</span><span class="ratio">3.7%</span></div></td>
+            <td><div class="cell-grid"><span>109</span><span class="ratio">3.4%</span></div></td>
+            <td><div class="cell-grid"><span>127</span><span class="ratio">3.5%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">152</span><span class="ratio">4.3%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)36</span><span class="up">0.6%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 매출변동비</td>
+            <td><div class="cell-grid"><span>95</span><span class="ratio">3.0%</span></div></td>
+            <td><div class="cell-grid"><span>97</span><span class="ratio">2.9%</span></div></td>
+            <td><div class="cell-grid"><span>100</span><span class="ratio">3.2%</span></div></td>
+            <td><div class="cell-grid"><span>116</span><span class="ratio">3.2%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">109</span><span class="ratio">3.1%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)13</span><span>0.0%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 영업관리비</td>
+            <td><div class="cell-grid"><span>61</span><span class="ratio">1.9%</span></div></td>
+            <td><div class="cell-grid"><span>62</span><span class="ratio">1.9%</span></div></td>
+            <td><div class="cell-grid"><span>55</span><span class="ratio">1.7%</span></div></td>
+            <td><div class="cell-grid"><span>60</span><span class="ratio">1.6%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">54</span><span class="ratio">1.5%</span></div></td>
+            <td><div class="delta-grid"><span class="down">(-)8</span><span class="down">-0.4%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 일반관리비</td>
+            <td><div class="cell-grid"><span>126</span><span class="ratio">4.0%</span></div></td>
+            <td><div class="cell-grid"><span>133</span><span class="ratio">4.1%</span></div></td>
+            <td><div class="cell-grid"><span>153</span><span class="ratio">4.9%</span></div></td>
+            <td><div class="cell-grid"><span>130</span><span class="ratio">3.6%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">118</span><span class="ratio">3.3%</span></div></td>
+            <td><div class="delta-grid"><span class="down">(-)8</span><span class="down">-0.7%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 기타비용</td>
+            <td><div class="cell-grid"><span>41</span><span class="ratio">1.3%</span></div></td>
+            <td><div class="cell-grid"><span>26</span><span class="ratio">0.8%</span></div></td>
+            <td><div class="cell-grid"><span>33</span><span class="ratio">1.0%</span></div></td>
+            <td><div class="cell-grid"><span>19</span><span class="ratio">0.5%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">14</span><span class="ratio">0.4%</span></div></td>
+            <td><div class="delta-grid"><span class="down">(-)26</span><span class="down">-0.9%p</span></div></td>
+          </tr>
+          <tr class="highlight"><td class="row-label">R&D 차감전 이익</td>
+            <td><div class="cell-grid"><span>760</span><span class="ratio">24.1%</span></div></td>
+            <td><div class="cell-grid"><span>846</span><span class="ratio">25.8%</span></div></td>
+            <td><div class="cell-grid"><span>804</span><span class="ratio">25.4%</span></div></td>
+            <td><div class="cell-grid"><span>1,020</span><span class="ratio">28.0%</span></div></td>
+            <td class="current highlight-cell"><div class="cell-grid"><span style="font-weight:600">925</span><span class="ratio">26.0%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)165</span><span class="up">2.0%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> R&D비용</td>
+            <td><div class="cell-grid"><span>348</span><span class="ratio">11.0%</span></div></td>
+            <td><div class="cell-grid"><span>428</span><span class="ratio">13.1%</span></div></td>
+            <td><div class="cell-grid"><span>384</span><span class="ratio">12.1%</span></div></td>
+            <td><div class="cell-grid"><span>395</span><span class="ratio">10.8%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">389</span><span class="ratio">11.0%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)41</span><span class="down">-0.1%p</span></div></td>
+          </tr>
+          <tr class="highlight" style="border-top:2px solid #F5A623"><td class="row-label" style="font-size:14px">영업이익</td>
+            <td><div class="cell-grid"><span><b>411</b></span><span class="ratio">13.0%</span></div></td>
+            <td><div class="cell-grid"><span><b>418</b></span><span class="ratio">12.8%</span></div></td>
+            <td><div class="cell-grid"><span><b>420</b></span><span class="ratio">13.3%</span></div></td>
+            <td><div class="cell-grid"><span><b>625</b></span><span class="ratio">17.2%</span></div></td>
+            <td class="current highlight-cell"><div class="cell-grid"><span style="font-weight:700">535</span><span class="ratio">15.1%</span></div></td>
+            <td><div class="delta-grid"><span class="up"><b>(+)124</b></span><span class="up"><b>2.1%p</b></span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 컴팩트 버전 ════ -->
+<div class="panel">
+  <div class="panel-label">컴팩트 (축소 패딩)</div>
+  <div class="compact-ver">
+    <div class="header">
+      <h2 style="display:inline">전사 손익 총괄</h2>
+      <div class="tab-group" style="float:right">
+        <button>1Q</button><button>2Q</button><button class="active">3Q</button><button>4Q</button><button>연간</button>
+      </div>
+    </div>
+    <div class="unit">단위 : 억원</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="row-label" style="background:#F5A623;color:#fff;min-width:100px" rowspan="2">항목</th>
+            <th colspan="1">전년 동기</th>
+            <th colspan="3">직전 3분기</th>
+            <th colspan="1">당기</th>
+            <th rowspan="2">전년 동기比</th>
+          </tr>
+          <tr>
+            <th>24.3Q</th><th>24.4Q</th><th>25.1Q</th><th>25.2Q</th><th>25.3Q</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 매출액</td>
+            <td><div class="cell-grid"><span>3,159</span><span></span></div></td>
+            <td><div class="cell-grid"><span>3,273</span><span></span></div></td>
+            <td><div class="cell-grid"><span>3,162</span><span></span></div></td>
+            <td><div class="cell-grid"><span>3,639</span><span></span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">3,551</span><span></span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)392</span><span class="up">12.4%</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 매출원가</td>
+            <td><div class="cell-grid"><span>1,555</span><span class="ratio">49.2%</span></div></td>
+            <td><div class="cell-grid"><span>1,587</span><span class="ratio">48.5%</span></div></td>
+            <td><div class="cell-grid"><span>1,538</span><span class="ratio">48.6%</span></div></td>
+            <td><div class="cell-grid"><span>1,710</span><span class="ratio">47.0%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">1,726</span><span class="ratio">48.6%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)171</span><span class="down">-0.6%p</span></div></td>
+          </tr>
+          <tr class="highlight"><td class="row-label">매출총이익</td>
+            <td><div class="cell-grid"><span>1,605</span><span class="ratio">50.8%</span></div></td>
+            <td><div class="cell-grid"><span>1,687</span><span class="ratio">51.5%</span></div></td>
+            <td><div class="cell-grid"><span>1,624</span><span class="ratio">51.4%</span></div></td>
+            <td><div class="cell-grid"><span>1,929</span><span class="ratio">53.0%</span></div></td>
+            <td class="current highlight-cell"><div class="cell-grid"><span style="font-weight:600">1,825</span><span class="ratio">51.4%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)220</span><span class="up">0.6%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 영업판관비</td>
+            <td><div class="cell-grid"><span>405</span><span class="ratio">12.8%</span></div></td>
+            <td><div class="cell-grid"><span>403</span><span class="ratio">12.3%</span></div></td>
+            <td><div class="cell-grid"><span>371</span><span class="ratio">11.7%</span></div></td>
+            <td><div class="cell-grid"><span>458</span><span class="ratio">12.6%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">453</span><span class="ratio">12.8%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)48</span><span class="down">-0.1%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 판매대행수수료</td>
+            <td><div class="cell-grid"><span>116</span><span class="ratio">3.7%</span></div></td>
+            <td><div class="cell-grid"><span>120</span><span class="ratio">3.7%</span></div></td>
+            <td><div class="cell-grid"><span>109</span><span class="ratio">3.4%</span></div></td>
+            <td><div class="cell-grid"><span>127</span><span class="ratio">3.5%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">152</span><span class="ratio">4.3%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)36</span><span class="up">0.6%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 매출변동비</td>
+            <td><div class="cell-grid"><span>95</span><span class="ratio">3.0%</span></div></td>
+            <td><div class="cell-grid"><span>97</span><span class="ratio">2.9%</span></div></td>
+            <td><div class="cell-grid"><span>100</span><span class="ratio">3.2%</span></div></td>
+            <td><div class="cell-grid"><span>116</span><span class="ratio">3.2%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">109</span><span class="ratio">3.1%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)13</span><span>0.0%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 영업관리비</td>
+            <td><div class="cell-grid"><span>61</span><span class="ratio">1.9%</span></div></td>
+            <td><div class="cell-grid"><span>62</span><span class="ratio">1.9%</span></div></td>
+            <td><div class="cell-grid"><span>55</span><span class="ratio">1.7%</span></div></td>
+            <td><div class="cell-grid"><span>60</span><span class="ratio">1.6%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">54</span><span class="ratio">1.5%</span></div></td>
+            <td><div class="delta-grid"><span class="down">(-)8</span><span class="down">-0.4%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 일반관리비</td>
+            <td><div class="cell-grid"><span>126</span><span class="ratio">4.0%</span></div></td>
+            <td><div class="cell-grid"><span>133</span><span class="ratio">4.1%</span></div></td>
+            <td><div class="cell-grid"><span>153</span><span class="ratio">4.9%</span></div></td>
+            <td><div class="cell-grid"><span>130</span><span class="ratio">3.6%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">118</span><span class="ratio">3.3%</span></div></td>
+            <td><div class="delta-grid"><span class="down">(-)8</span><span class="down">-0.7%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> 기타비용</td>
+            <td><div class="cell-grid"><span>41</span><span class="ratio">1.3%</span></div></td>
+            <td><div class="cell-grid"><span>26</span><span class="ratio">0.8%</span></div></td>
+            <td><div class="cell-grid"><span>33</span><span class="ratio">1.0%</span></div></td>
+            <td><div class="cell-grid"><span>19</span><span class="ratio">0.5%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">14</span><span class="ratio">0.4%</span></div></td>
+            <td><div class="delta-grid"><span class="down">(-)26</span><span class="down">-0.9%p</span></div></td>
+          </tr>
+          <tr class="highlight"><td class="row-label">R&D 차감전 이익</td>
+            <td><div class="cell-grid"><span>760</span><span class="ratio">24.1%</span></div></td>
+            <td><div class="cell-grid"><span>846</span><span class="ratio">25.8%</span></div></td>
+            <td><div class="cell-grid"><span>804</span><span class="ratio">25.4%</span></div></td>
+            <td><div class="cell-grid"><span>1,020</span><span class="ratio">28.0%</span></div></td>
+            <td class="current highlight-cell"><div class="cell-grid"><span style="font-weight:600">925</span><span class="ratio">26.0%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)165</span><span class="up">2.0%p</span></div></td>
+          </tr>
+          <tr class="drillable"><td class="row-label"><span class="arrow">▶</span> R&D비용</td>
+            <td><div class="cell-grid"><span>348</span><span class="ratio">11.0%</span></div></td>
+            <td><div class="cell-grid"><span>428</span><span class="ratio">13.1%</span></div></td>
+            <td><div class="cell-grid"><span>384</span><span class="ratio">12.1%</span></div></td>
+            <td><div class="cell-grid"><span>395</span><span class="ratio">10.8%</span></div></td>
+            <td class="current"><div class="cell-grid"><span style="font-weight:600">389</span><span class="ratio">11.0%</span></div></td>
+            <td><div class="delta-grid"><span class="up">(+)41</span><span class="down">-0.1%p</span></div></td>
+          </tr>
+          <tr class="highlight" style="border-top:2px solid #F5A623"><td class="row-label">영업이익</td>
+            <td><div class="cell-grid"><span><b>411</b></span><span class="ratio">13.0%</span></div></td>
+            <td><div class="cell-grid"><span><b>418</b></span><span class="ratio">12.8%</span></div></td>
+            <td><div class="cell-grid"><span><b>420</b></span><span class="ratio">13.3%</span></div></td>
+            <td><div class="cell-grid"><span><b>625</b></span><span class="ratio">17.2%</span></div></td>
+            <td class="current highlight-cell"><div class="cell-grid"><span style="font-weight:700">535</span><span class="ratio">15.1%</span></div></td>
+            <td><div class="delta-grid"><span class="up"><b>(+)124</b></span><span class="up"><b>2.1%p</b></span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,407 @@
+@import "tailwindcss";
+
+@theme {
+  /* 기본 색상 — PPT 주황/노란 헤더 톤 */
+  --color-primary: #F5A623;
+  --color-primary-light: #FFF3E0;
+  --color-primary-dark: #E09000;
+
+  /* 증감 표시 */
+  --color-increase: #1565C0;
+  --color-decrease: #D32F2F;
+
+  /* 배경/표면 */
+  --color-surface: #F9FAFB;
+  --color-surface-subtle: #F8F9FC;
+  --color-border: #E5E7EB;
+  --color-border-light: #F0F1F4;
+  --color-highlight: #FFF8EC;
+
+  /* 사업부별 고정 색상 */
+  --color-div-etc: #F5A623;
+  --color-div-ch: #4CAF50;
+  --color-div-health: #2196F3;
+  --color-div-nabota: #9C27B0;
+  --color-div-global: #FF5722;
+  --color-div-contract: #607D8B;
+  --color-div-other: #795548;
+
+  --font-sans: 'Wanted Sans Variable', 'Wanted Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-display: 'DM Serif Display', Georgia, serif;
+}
+
+/* ── 키프레임 ── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; max-height: 0; }
+  to   { opacity: 1; max-height: 200px; }
+}
+
+/* ⚡ Overdrive: 메시지 등장 — spring-like slide-up + fade */
+@keyframes msgSpringIn {
+  0%   { opacity: 0; transform: translateY(16px) scale(0.97); }
+  60%  { opacity: 1; transform: translateY(-3px) scale(1.005); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ⚡ Overdrive: 패널 오픈 — spring scale */
+@keyframes panelSpringIn {
+  0%   { opacity: 0; transform: scale(0.92) translateY(20px); }
+  50%  { opacity: 1; transform: scale(1.015) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ⚡ Overdrive: 사이드바 슬라이드 */
+@keyframes sidebarSlideIn {
+  0%   { opacity: 0; transform: translateX(-100%); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ⚡ Overdrive: thinking 펄스 — AI 사고 시각화 */
+@keyframes thinkingPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes thinkingGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(245, 166, 35, 0.15); }
+  50%      { box-shadow: 0 0 20px rgba(245, 166, 35, 0.35); }
+}
+
+/* ⚡ Overdrive: Tool 진행 바 — 부드러운 이동 */
+@keyframes progressFlow {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* ⚡ Overdrive: 스트리밍 커서 깜빡임 */
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ⚡ Overdrive: 후속질문 칩 부유 */
+@keyframes chipFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-2px); }
+}
+
+/* ⚡ Overdrive: 칩 스태거드 등장 */
+@keyframes chipSlideIn {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ⚡ Overdrive: 차트 등장 — clip reveal + fade */
+@keyframes chartReveal {
+  0%   { opacity: 0; clip-path: inset(100% 0 0 0); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+/* ⚡ Overdrive: 입력창 glow */
+@keyframes inputGlow {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.1); }
+  50%      { box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.25); }
+}
+
+/* ⚡ Overdrive: 전송 버튼 ripple */
+@keyframes sendRipple {
+  0%   { transform: scale(0.9); opacity: 0.8; }
+  50%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ⚡ Overdrive: 에러 shake */
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(-4px); }
+  30%      { transform: translateX(4px); }
+  45%      { transform: translateX(-3px); }
+  60%      { transform: translateX(3px); }
+  75%      { transform: translateX(-1px); }
+}
+
+/* ── 유틸리티 클래스 ── */
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease both;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.25s ease both;
+  overflow: hidden;
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite linear;
+  background-size: 200% 100%;
+}
+
+/* ⚡ Overdrive 유틸리티 */
+.animate-msg-in {
+  animation: msgSpringIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-panel-in {
+  animation: panelSpringIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.animate-sidebar-in {
+  animation: sidebarSlideIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-thinking-pulse {
+  animation: thinkingPulse 2s ease-in-out infinite;
+}
+
+.animate-thinking-glow {
+  animation: thinkingGlow 2s ease-in-out infinite;
+}
+
+.animate-progress-flow {
+  animation: progressFlow 1.8s ease-in-out infinite;
+}
+
+.animate-cursor-blink {
+  animation: cursorBlink 0.8s step-end infinite;
+}
+
+.animate-chip-float {
+  animation: chipFloat 3s ease-in-out infinite;
+}
+
+.animate-chip-in {
+  animation: chipSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-chart-reveal {
+  animation: chartReveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-send-ripple {
+  animation: sendRipple 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-input-glow {
+  animation: inputGlow 2s ease-in-out infinite;
+}
+
+.animate-error-shake {
+  animation: errorShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* 스켈레톤 로딩 */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 0.5rem;
+}
+
+/* 펼침 화살표 */
+.expand-arrow {
+  transition: transform 0.15s ease;
+  display: inline-block;
+  color: var(--color-primary);
+  font-size: 0.65rem;
+}
+.expand-arrow.rotated {
+  transform: rotate(90deg);
+}
+
+
+/* ⚡ Overdrive: Cascade Chart — 비용 증감 분석 */
+@keyframes cascadeRowIn {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes cascadeBarGrow {
+  0%   { width: 0; }
+  100% { width: var(--bar-target, 0%); }
+}
+@keyframes cascadeDeltaIn {
+  0%   { opacity: 0; transform: scale(0.6) translateX(-4px); }
+  60%  { opacity: 1; transform: scale(1.08) translateX(0); }
+  100% { opacity: 1; transform: scale(1) translateX(0); }
+}
+@keyframes cascadeSubIn {
+  0%   { opacity: 0; transform: translateX(-10px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes cascadeChipIn {
+  0%   { opacity: 0; transform: scale(0.5); }
+  70%  { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes cascadeFadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.cascade-row {
+  animation: cascadeRowIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.cascade-bar {
+  animation: cascadeBarGrow 0.65s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+}
+.cascade-delta {
+  animation: cascadeDeltaIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.cascade-sub {
+  animation: cascadeSubIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.cascade-chip {
+  animation: cascadeChipIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.cascade-fade-in {
+  animation: cascadeFadeIn 0.3s ease both;
+}
+
+/* Cascade 세부계정 컨테이너: 확장 시 부드러운 등장 */
+.cascade-subs-container {
+  animation: cascadeFadeIn 0.25s ease both;
+  border-left: 2px solid var(--color-border-light, #F0F1F4);
+  padding-left: 0.75rem;
+}
+
+/* ── 접근성 — 모션 감소 선호 ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── 포커스 표시 (전역) ── */
+button:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+tr[tabindex="0"]:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+div[role="button"]:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* ── 금액 테이블 숫자 정렬용 ── */
+table {
+  font-variant-numeric: tabular-nums;
+}
+table td, .kpi-card {
+  font-feature-settings: 'tnum' 1, 'kern' 1;
+}
+
+/* ── 모바일 테이블 가로 스크롤 힌트 ── */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── sticky 열 그림자 (스크롤 시 구분) ── */
+@media (max-width: 1023px) {
+  td.sticky, th.sticky {
+    box-shadow: 2px 0 4px -2px rgba(0,0,0,0.08);
+  }
+}
+
+/* ── 하단 탭 safe area (노치 대응) ── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ── 채팅 메시지 off-screen 렌더링 최적화 (rendering-content-visibility) ── */
+.chat-message-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 80px;
+}
+
+/* ── 가로 스크롤 탭 fade 힌트 ── */
+.scroll-fade {
+  mask-image: linear-gradient(to right, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+}
+
+/* ── P&L 테이블 금액 그리드 셀 ── */
+
+/* 모바일: 1칸 세로 쌓기 (overflow 방지) */
+.grid-amount,
+.grid-delta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  padding: 0 6px;
+}
+
+/* 데스크탑(lg): 2칸 가로 배치 */
+@media (min-width: 1024px) {
+  .grid-amount {
+    display: grid;
+    grid-template-columns: 58px 46px;
+    gap: 6px;
+    justify-content: center;
+    align-items: baseline;
+    padding: 0;
+  }
+  .grid-delta {
+    display: grid;
+    grid-template-columns: 62px 48px;
+    gap: 6px;
+    justify-content: center;
+    align-items: baseline;
+    padding: 0;
+  }
+}
+
+/* ── 카드 섹션 ── */
+.card-section {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+}
+
+/* ── 테이블 헤더 그라디언트 ── */
+.thead-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+}
+
+/* ── KPI 카드 ── */
+.kpi-card {
+  background: white;
+  border: 1px solid var(--color-border-light, #F0F1F4);
+  border-radius: 0.875rem;
+  padding: 0.625rem 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+}
+@media (hover: hover) {
+  .kpi-card:hover {
+    background-color: var(--color-primary-light);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    transform: translateY(-1px);
+  }
+}
+@media (min-width: 1024px) {
+  .kpi-card {
+    padding: 1rem 1.25rem;
+  }
+}

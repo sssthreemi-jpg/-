@@ -1,0 +1,726 @@
+{
+  "contractCountries": [
+    {
+      "year": 2022,
+      "quarter": 1,
+      "month": 1,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "month": 2,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "month": 3,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "month": 4,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "month": 5,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "month": 6,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "month": 7,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "month": 8,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "month": 9,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "month": 10,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "month": 11,
+      "value": 83
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "month": 12,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "month": 1,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "month": 2,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "month": 3,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "month": 4,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "month": 5,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "month": 6,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "month": 7,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "month": 8,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "month": 9,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "month": 10,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "month": 11,
+      "value": 83
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "month": 12,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "month": 1,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "month": 2,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "month": 3,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "month": 4,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "month": 5,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "month": 6,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "month": 7,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "month": 8,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "month": 9,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "month": 10,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "month": 11,
+      "value": 83
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "month": 12,
+      "value": 83
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "month": 1,
+      "value": 83
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "month": 2,
+      "value": 83
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "month": 3,
+      "value": 83
+    },
+    {
+      "year": 2025,
+      "quarter": 2,
+      "month": 4,
+      "value": 87
+    },
+    {
+      "year": 2025,
+      "quarter": 2,
+      "month": 5,
+      "value": 87
+    },
+    {
+      "year": 2025,
+      "quarter": 2,
+      "month": 6,
+      "value": 87
+    },
+    {
+      "year": 2025,
+      "quarter": 3,
+      "month": 7,
+      "value": 92
+    },
+    {
+      "year": 2025,
+      "quarter": 3,
+      "month": 8,
+      "value": 92
+    },
+    {
+      "year": 2025,
+      "quarter": 3,
+      "month": 9,
+      "value": 92
+    },
+    {
+      "year": 2025,
+      "quarter": 4,
+      "month": 10,
+      "value": 92
+    },
+    {
+      "year": 2025,
+      "quarter": 4,
+      "month": 11,
+      "value": 92
+    },
+    {
+      "year": 2025,
+      "quarter": 4,
+      "month": 12,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 1,
+      "month": 1,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 1,
+      "month": 2,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 1,
+      "month": 3,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 2,
+      "month": 4,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 2,
+      "month": 5,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 2,
+      "month": 6,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 3,
+      "month": 7,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 3,
+      "month": 8,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 3,
+      "month": 9,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 4,
+      "month": 10,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 4,
+      "month": 11,
+      "value": 92
+    },
+    {
+      "year": 2026,
+      "quarter": 4,
+      "month": 12,
+      "value": 92
+    }
+  ],
+  "launchCountries": [
+    {
+      "year": 2022,
+      "quarter": 1,
+      "month": 1,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "month": 2,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "month": 3,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "month": 4,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "month": 5,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "month": 6,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "month": 7,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "month": 8,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "month": 9,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "month": 10,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "month": 11,
+      "value": 31
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "month": 12,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "month": 1,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "month": 2,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "month": 3,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "month": 4,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "month": 5,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "month": 6,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "month": 7,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "month": 8,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "month": 9,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "month": 10,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "month": 11,
+      "value": 31
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "month": 12,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "month": 1,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "month": 2,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "month": 3,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "month": 4,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "month": 5,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "month": 6,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "month": 7,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "month": 8,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "month": 9,
+      "value": 31
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "month": 10,
+      "value": 33
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "month": 11,
+      "value": 33
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "month": 12,
+      "value": 33
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "month": 1,
+      "value": 35
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "month": 2,
+      "value": 35
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "month": 3,
+      "value": 35
+    },
+    {
+      "year": 2025,
+      "quarter": 2,
+      "month": 4,
+      "value": 38
+    },
+    {
+      "year": 2025,
+      "quarter": 2,
+      "month": 5,
+      "value": 38
+    },
+    {
+      "year": 2025,
+      "quarter": 2,
+      "month": 6,
+      "value": 38
+    },
+    {
+      "year": 2025,
+      "quarter": 3,
+      "month": 7,
+      "value": 38
+    },
+    {
+      "year": 2025,
+      "quarter": 3,
+      "month": 8,
+      "value": 38
+    },
+    {
+      "year": 2025,
+      "quarter": 3,
+      "month": 9,
+      "value": 38
+    },
+    {
+      "year": 2025,
+      "quarter": 4,
+      "month": 10,
+      "value": 38
+    },
+    {
+      "year": 2025,
+      "quarter": 4,
+      "month": 11,
+      "value": 38
+    },
+    {
+      "year": 2025,
+      "quarter": 4,
+      "month": 12,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 1,
+      "month": 1,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 1,
+      "month": 2,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 1,
+      "month": 3,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 2,
+      "month": 4,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 2,
+      "month": 5,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 2,
+      "month": 6,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 3,
+      "month": 7,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 3,
+      "month": 8,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 3,
+      "month": 9,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 4,
+      "month": 10,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 4,
+      "month": 11,
+      "value": 38
+    },
+    {
+      "year": 2026,
+      "quarter": 4,
+      "month": 12,
+      "value": 38
+    }
+  ]
+}

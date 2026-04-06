@@ -1,0 +1,27 @@
+node_modules/
+dist/
+input/
+.claude/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage
+.nyc_output
+
+# Build
+build/Release
+
+# Env
+.env
+
+# IDE
+.eslintcache
+.node_repl_history
+*.tgz
+.yarn-integrity
