@@ -8,15 +8,18 @@ import { getCapabilities } from '../data/companiesRegistry'
 import { fmt, fmtGrowth, growthClass, fmtInd } from '../utils/groupFormatters'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LineChart, Line, CartesianGrid } from 'recharts'
 
+const COL = 'w-[15%] min-w-[80px]'
+const COL_LABEL = 'w-[25%] min-w-[140px]'
+
 function PLRow({ label, data, highlight }) {
   return (
     <tr className={`border-b border-border-light ${highlight ? 'bg-highlight font-semibold' : 'hover:bg-surface-subtle'}`}>
-      <td className="px-4 py-2.5 text-left font-medium text-gray-700">{label}</td>
-      <td className="px-3 py-2.5 text-right text-gray-500">{fmt(data?.y22)}</td>
-      <td className="px-3 py-2.5 text-right text-gray-500">{fmt(data?.y23)}</td>
-      <td className="px-3 py-2.5 text-right text-gray-500">{fmt(data?.y24)}</td>
-      <td className="px-3 py-2.5 text-right font-bold text-gray-900">{fmt(data?.y25)}</td>
-      <td className="px-3 py-2.5 text-right text-gray-400">{fmt(data?.target26)}</td>
+      <td className={`px-4 py-2 text-left font-medium text-gray-700 ${COL_LABEL}`}>{label}</td>
+      <td className={`px-3 py-2 text-right text-gray-500 tabular-nums ${COL}`}>{fmt(data?.y22)}</td>
+      <td className={`px-3 py-2 text-right text-gray-500 tabular-nums ${COL}`}>{fmt(data?.y23)}</td>
+      <td className={`px-3 py-2 text-right text-gray-500 tabular-nums ${COL}`}>{fmt(data?.y24)}</td>
+      <td className={`px-3 py-2 text-right font-bold text-gray-900 tabular-nums ${COL}`}>{fmt(data?.y25)}</td>
+      <td className={`px-3 py-2 text-right text-gray-400 tabular-nums ${COL}`}>{fmt(data?.target26)}</td>
     </tr>
   )
 }
@@ -55,26 +58,26 @@ function IndicatorTable({ indicators, title, accent }) {
               {grouped.length > 1 && (
                 <div className="text-xs font-bold text-increase px-4 py-1.5 bg-blue-50/50 border-b border-blue-100">{cat}</div>
               )}
-              <table className="w-full text-xs">
+              <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-surface">
-                    <th className="text-left px-4 py-2 font-semibold text-gray-500 min-w-[140px]">지표명</th>
-                    <th className="text-right px-3 py-2 font-semibold text-gray-500">22년</th>
-                    <th className="text-right px-3 py-2 font-semibold text-gray-500">23년</th>
-                    <th className="text-right px-3 py-2 font-semibold text-gray-500">24년</th>
-                    <th className="text-right px-3 py-2 font-semibold text-gray-500">25년</th>
-                    <th className="text-right px-3 py-2 font-semibold text-gray-500">26년 목표</th>
+                  <tr className="bg-primary-light">
+                    <th className={`text-left px-4 py-2 font-semibold text-gray-700 ${COL_LABEL}`}>지표명</th>
+                    <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>22년</th>
+                    <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>23년</th>
+                    <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>24년</th>
+                    <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>25년</th>
+                    <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>26년 목표</th>
                   </tr>
                 </thead>
                 <tbody>
                   {inds.map((ind, i) => (
                     <tr key={i} className="border-b border-border-light hover:bg-highlight/40">
-                      <td className="px-4 py-1.5 text-gray-600 font-medium">{ind.label}</td>
-                      <td className="px-3 py-1.5 text-right text-gray-500">{fmtInd(ind.values?.y22, ind.isRate)}</td>
-                      <td className="px-3 py-1.5 text-right text-gray-500">{fmtInd(ind.values?.y23, ind.isRate)}</td>
-                      <td className="px-3 py-1.5 text-right text-gray-500">{fmtInd(ind.values?.y24, ind.isRate)}</td>
-                      <td className="px-3 py-1.5 text-right font-semibold text-gray-900">{fmtInd(ind.values?.y25, ind.isRate)}</td>
-                      <td className="px-3 py-1.5 text-right text-gray-400">{fmtInd(ind.values?.target26, ind.isRate)}</td>
+                      <td className={`px-4 py-2 text-gray-600 font-medium ${COL_LABEL}`}>{ind.label}</td>
+                      <td className={`px-3 py-2 text-right text-gray-500 tabular-nums ${COL}`}>{fmtInd(ind.values?.y22, ind.isRate)}</td>
+                      <td className={`px-3 py-2 text-right text-gray-500 tabular-nums ${COL}`}>{fmtInd(ind.values?.y23, ind.isRate)}</td>
+                      <td className={`px-3 py-2 text-right text-gray-500 tabular-nums ${COL}`}>{fmtInd(ind.values?.y24, ind.isRate)}</td>
+                      <td className={`px-3 py-2 text-right font-semibold text-gray-900 tabular-nums ${COL}`}>{fmtInd(ind.values?.y25, ind.isRate)}</td>
+                      <td className={`px-3 py-2 text-right text-gray-400 tabular-nums ${COL}`}>{fmtInd(ind.values?.target26, ind.isRate)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -196,12 +199,12 @@ export default function CompanyAnnual() {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-primary-light">
-                <th className="text-left px-4 py-3 font-semibold text-gray-700">구분</th>
-                <th className="text-right px-3 py-3 font-semibold text-gray-700">22년</th>
-                <th className="text-right px-3 py-3 font-semibold text-gray-700">23년</th>
-                <th className="text-right px-3 py-3 font-semibold text-gray-700">24년</th>
-                <th className="text-right px-3 py-3 font-semibold text-gray-700">25년</th>
-                <th className="text-right px-3 py-3 font-semibold text-gray-700">26년 목표</th>
+                <th className={`text-left px-4 py-2 font-semibold text-gray-700 ${COL_LABEL}`}>구분</th>
+                <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>22년</th>
+                <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>23년</th>
+                <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>24년</th>
+                <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>25년</th>
+                <th className={`text-right px-3 py-2 font-semibold text-gray-700 ${COL}`}>26년 목표</th>
               </tr>
             </thead>
             <tbody>
