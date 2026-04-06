@@ -4,12 +4,14 @@
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom'
 import { useCompany, slugify } from '../contexts/CompanyContext'
 
-const groupNav = [
+const topNav = [
   { path: '/', label: '그룹 종합', short: '종합' },
   { path: '/comparison', label: '비교 분석', short: '비교' },
   { path: '/companies', label: '회사별 상세', short: '상세' },
-  { path: '/presentation', label: '회사별 발표', short: '발표' },
   { path: '/alerts', label: '주요 이슈', short: '이슈', alert: true },
+]
+const bottomNav = [
+  { path: '/presentation', label: '회사별 발표', short: '발표' },
 ]
 
 export default function GroupLayout() {
@@ -35,9 +37,9 @@ export default function GroupLayout() {
           <p className="text-[10px] text-white/60 tracking-widest uppercase mt-0.5">Group Performance Dashboard</p>
         </div>
 
-        {/* 그룹 메뉴 */}
+        {/* 상단 메뉴: 그룹종합 → 비교분석 → 회사별상세 → 주요이슈 */}
         <nav className="p-3 space-y-1 border-b border-gray-700">
-          {groupNav.map(item => (
+          {topNav.map(item => (
             <NavLink
               key={item.path}
               to={item.path}
@@ -76,7 +78,7 @@ export default function GroupLayout() {
         </div>
 
         {/* 관계사 목록 */}
-        <div className="px-3 pt-3 pb-4">
+        <div className="px-3 pt-3 border-b border-gray-700 pb-3">
           <div className="px-3 py-1.5 text-[10px] text-gray-500 uppercase tracking-wider font-bold">
             관계사그룹 ({affiliates.length})
           </div>
@@ -94,13 +96,30 @@ export default function GroupLayout() {
             </NavLink>
           ))}
         </div>
+
+        {/* 하단 메뉴: 회사별 발표 */}
+        <nav className="p-3 space-y-1">
+          {bottomNav.map(item => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  isActive ? 'bg-primary text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                }`
+              }
+            >
+              🎤 {item.label}
+            </NavLink>
+          ))}
+        </nav>
       </aside>
 
       {/* 모바일 헤더 */}
       <header className="lg:hidden bg-primary text-white px-4 py-3 flex items-center justify-between">
         <h1 className="text-lg tracking-[0.1em]" style={{ fontFamily: 'var(--font-display)' }}>대웅그룹</h1>
         <nav className="flex gap-1">
-          {groupNav.map(item => (
+          {[...topNav, ...bottomNav].map(item => (
             <NavLink
               key={item.path}
               to={item.path}
@@ -124,7 +143,7 @@ export default function GroupLayout() {
 
       {/* 모바일 하단 탭 */}
       <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white border-t border-border flex z-30 pb-safe" style={{ boxShadow: '0 -2px 8px rgba(0,0,0,0.06)' }}>
-        {groupNav.map(item => (
+        {[...topNav, ...bottomNav].map(item => (
           <NavLink
             key={item.path}
             to={item.path}
