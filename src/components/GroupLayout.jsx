@@ -6,7 +6,6 @@ import { useCompany, slugify } from '../contexts/CompanyContext'
 
 const topNav = [
   { path: '/', label: '그룹 종합', short: '종합' },
-  { path: '/comparison', label: '비교 분석', short: '비교' },
   { path: '/companies', label: '회사별 상세', short: '상세' },
   { path: '/alerts', label: '주요 이슈', short: '이슈', alert: true },
 ]

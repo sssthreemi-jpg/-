@@ -6,7 +6,6 @@ import Layout from './components/Layout'
 
 // 그룹 레벨 페이지
 const GroupOverview = lazy(() => import('./pages/GroupOverview'))
-const GroupComparison = lazy(() => import('./pages/GroupComparison'))
 const CompanyAnnual = lazy(() => import('./pages/CompanyAnnual'))
 const CompanyCards = lazy(() => import('./pages/CompanyCards'))
 const CompanyPresentation = lazy(() => import('./pages/CompanyPresentation'))
@@ -52,7 +51,6 @@ export default function App() {
         {/* 그룹 레벨 페이지 */}
         <Route element={<GroupLayout />}>
           <Route path="/" element={<ErrorBoundary><Suspense fallback={<PageFallback />}><GroupOverview /></Suspense></ErrorBoundary>} />
-          <Route path="/comparison" element={<ErrorBoundary><Suspense fallback={<PageFallback />}><GroupComparison /></Suspense></ErrorBoundary>} />
           <Route path="/companies" element={<ErrorBoundary><Suspense fallback={<PageFallback />}><CompanyCards /></Suspense></ErrorBoundary>} />
           <Route path="/presentation" element={<ErrorBoundary><Suspense fallback={<PageFallback />}><CompanyPresentation /></Suspense></ErrorBoundary>} />
           <Route path="/alerts" element={<ErrorBoundary><Suspense fallback={<PageFallback />}><AlertDashboard /></Suspense></ErrorBoundary>} />
